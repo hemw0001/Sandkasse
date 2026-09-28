@@ -8,6 +8,12 @@ article {
   gap: 0, 1rem;
 }
 
+.udsolgt {
+  filter: grayscale(1);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 @media (min-width: 800px) {
   .produktliste {
     grid-template-columns: repeat(3, 1fr);
