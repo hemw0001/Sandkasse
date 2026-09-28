@@ -70,6 +70,24 @@ h2 {
   margin: 5px;
 }
 
+.udsolgt {
+  filter: grayscale(1);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.tilbudlabel {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 1rem;
+  background-color: yellow;
+}
+
+.card {
+  position: relative;
+}
+
 footer {
   text-align: center;
 }
