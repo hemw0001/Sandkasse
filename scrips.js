@@ -1,14 +1,37 @@
 const cat = new URLSearchParams(window.location.search).get("cat");
 const endpoint = `https://kea-alt-del.dk/t7/api/products?category=${cat}`;
 const produktliste = document.querySelector(".produktliste");
-document.querySelector("h2").textContent = cat;
+
+document.querySelector("h2").textContent = cat; // vis bruger hvilken kategori der vies
+
+document.querySelectorAll("#filtre button").forEach((knap) => knap.addEventListener("click", filtrer));
+
+let alleData, udsnit;
 
 fetch(endpoint)
   .then((res) => res.json())
-  .then(visData);
+  .then((data) => {
+    alleData = udsnit = data;
+    visData(data);
+  });
 
+function filtrer(e) {
+  console.log(e.target.textContent); // hvad står der i den knap der blev kikket på?
+  console.log(alleData, udsnit);
+  const valgt = e.target.textContent;
+  if (valgt == "Alle") {
+    udsnit = alleData;
+  } else {
+    udsnit = alleData.filter((element) => element.gender == valgt);
+  }
+
+  visData(udsnit);
+}
+const visantal = document.querySelector("#filtre span");
 function visData(json) {
-  console.log(json);
+  visantal.textContent = json.length;
+  // console.log(json);
+  produktliste.innerHTML = "";
   json.forEach((element) => {
     const tilbudspris = Math.round(element.price - (element.price * element.discount) / 100);
     produktliste.innerHTML += `
@@ -23,7 +46,10 @@ function visData(json) {
      <p>kr. ${tilbudspris},-</p>`
            : `<p>kr. ${element.price},-</p>`
        }
-      
+       
+       
+        <p>${element.gender}</p>
+
        <p>${element.subcategory}</p>
        </article> </a>`;
   });
