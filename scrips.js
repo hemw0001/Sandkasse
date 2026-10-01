@@ -27,6 +27,25 @@ function filtrer(e) {
 
   visData(udsnit);
 }
+
+document.querySelectorAll("#sortering button").forEach((button) => button.addEventListener("click", sorter));
+
+function sorter(e) {
+  const valgt = e.target.textContent;
+
+  if (valgt == "Pris lav-høj") {
+    udsnit.sort((a, b) => a.price - b.price);
+  } else if (valgt == "Pris høj-lav") {
+    udsnit.sort((a, b) => b.price - a.price);
+  } else if (valgt == "A-Z") {
+    udsnit.sort((a, b) => a.productdisplayname.localeCompare(b.productdisplayname));
+  } else if (valgt == "Z-A") {
+    udsnit.sort((a, b) => b.productdisplayname.localeCompare(a.productdisplayname));
+  }
+
+  visData(udsnit);
+}
+
 const visantal = document.querySelector("#filtre span");
 function visData(json) {
   visantal.textContent = json.length;
